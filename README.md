@@ -1,3 +1,3 @@
 # Xu_li_anh
 - Bai tap xu li anh NMLT
-- Phan lon code la cua thay, hoc sinh chi viet hai ham nho...
+- Giao vien code san phan khung chuong trinh, hoc sinh viet them dinh nghia cho vai ham
