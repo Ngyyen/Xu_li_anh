@@ -5,6 +5,7 @@
 #include <vector>
 #include <numeric>
 #include <algorithm>
+#include <cmath>
 
 using namespace cv;
 using namespace std;
@@ -37,11 +38,12 @@ int main()
     int num_images;
 
     // Read and load images from given folder
-    root_img_path = "C:/Users/nhhbu/Desktop/UIT Giang day/Buoi05/";
+    root_img_path = "C:/Users/Nguyen Le/OneDrive/Máy tính/Buoi05/";
     all_image_paths = loadDirectory(root_img_path);
     num_images = all_image_paths.size();
     loadImgs(all_image_paths, images);
     transformVectorImgs(images, features1D, num_images);
+
 
     // Querying
     cout << "\nWhich index do you want to query: ";
@@ -66,18 +68,18 @@ int main()
         current_queried_image = features1D[i];
         switch (algo)
         {
-            case 0:
-            {
-                // Distance metric (You have to code this function)
-                score = distance(queried_image, current_queried_image, queried_image.size());
-                break;
-            }
-            case 1:
-            {
-                // Cosine Similarity metric (You have to code this function)
-                score = cosineSimilarity(queried_image, current_queried_image, queried_image.size());
-                break;
-            }
+        case 0:
+        {
+            // Distance metric (You have to code this function)
+            score = distance(queried_image, current_queried_image, queried_image.size());
+            break;
+        }
+        case 1:
+        {
+            // Cosine Similarity metric (You have to code this function)
+            score = cosineSimilarity(queried_image, current_queried_image, queried_image.size());
+            break;
+        }
         }
         scores.push_back(score);
     }
@@ -86,7 +88,7 @@ int main()
     cout << "\n" << number_of_results << " nearest images : ";
 
     sorted_indexes = sortIndexes(scores, false);
-    
+
     for (int i = 1; i < number_of_results + 1; i++) {
         images_need_to_show.push_back(imread(all_image_paths[sorted_indexes[i]]));
     }
@@ -251,7 +253,13 @@ cv::Mat makeCanvas(std::vector<cv::Mat>& vecMat, int windowHeight, int nRows) {
 double cosineSimilarity(vector<double> A, vector<double> B, unsigned int size)
 {
     // CODING HERE ...
-    return 0;
+    double tu=0, mau1=0,mau2=0;
+    for (int i = 0; i < size; ++i) {
+        tu += A[i] * B[i];
+        mau1 += A[i] * A[i];
+        mau2 += B[i] * B[i];
+    }
+    return tu / (sqrt(mau1) * sqrt(mau2));
 }
 
 /**
@@ -265,5 +273,14 @@ double cosineSimilarity(vector<double> A, vector<double> B, unsigned int size)
 double distance(vector<double> A, vector<double> B, unsigned int size)
 {
     // CODING HERE ...
-    return 0;
+    double s = 0;
+    for (int i = 0; i < size; ++i) {
+        s += (A[i] - B[i]) * (A[i] - B[i]);
+    }
+    return sqrt(s);
 }
+
+
+
+
+
